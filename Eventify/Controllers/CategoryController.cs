@@ -1,6 +1,6 @@
 ﻿using Eventify.Data;
 using Eventify.Models;
-using Eventify.DTOs.Categories.Input;
+    using Eventify.DTOs.Categories.Input;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
