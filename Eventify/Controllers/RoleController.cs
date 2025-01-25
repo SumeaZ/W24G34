@@ -21,7 +21,7 @@ namespace Eventify.Controllers
             _userManager = userManager;
         }
 
-        // GET: api/GetAllRoles
+
         [HttpGet("GetAllRoles")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetAllRoles()
@@ -30,7 +30,7 @@ namespace Eventify.Controllers
             return Ok(roles);
         }
 
-        // GET: api/GetRoleByName?name=admin
+       
         [HttpGet("GetRoleByName")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetRoleByName(string name)
@@ -43,7 +43,7 @@ namespace Eventify.Controllers
             return Ok(role);
         }
 
-        // POST: api/CreateRole
+        
         [HttpPost("CreateRole")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> CreateRole([FromBody] Role role)
@@ -65,7 +65,7 @@ namespace Eventify.Controllers
             return CreatedAtAction(nameof(GetRoleByName), new { name = role.Name }, newRole);
         }
 
-        // PUT: api/UpdateRole
+       
         [HttpPut("UpdateRole")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> UpdateRole(string name, [FromBody] Role role)
@@ -87,7 +87,7 @@ namespace Eventify.Controllers
             return Ok("Role updated successfully.");
         }
 
-        // DELETE: api/DeleteRole
+        
         [HttpDelete("DeleteRole")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteRole(string name)
@@ -109,8 +109,5 @@ namespace Eventify.Controllers
         }
     }
 
-    public class Role
-    {
-        public string Name { get; internal set; }
-    }
+    
 }

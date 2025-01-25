@@ -29,6 +29,6 @@ namespace Eventify.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
-           public Event Event { get; set; }
+        //public Event? Event { get; set; }
     }
 }

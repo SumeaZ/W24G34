@@ -1,6 +1,4 @@
-
-using Eventify.Data;
-using Eventify.DTOs.EventSchedule.Input;
+using Eventify.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +8,7 @@ using Eventify.Models;
 namespace Eventify.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/")]
     public class ScheduleController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -21,13 +19,15 @@ namespace Eventify.Controllers
         }
 
         [HttpGet("GetAllSchedules")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetAllSchedules()
         {
             var schedules = await _context.Schedules.ToListAsync();
             return Ok(schedules);
         }
 
-        [HttpGet("GetScheduleById/{id}")]
+        [HttpGet("GetScheduleById")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetScheduleById(int id)
         {
             var schedule = await _context.Schedules.FindAsync(id);
@@ -47,7 +47,7 @@ namespace Eventify.Controllers
                 return BadRequest(ModelState);
             }
 
-            var schedule = new EventSchedule
+            var schedule = new Schedule
             {
                 EventId = dto.EventId,
                 Title = dto.Title,
@@ -58,13 +58,13 @@ namespace Eventify.Controllers
                 UpdatedAt = DateTime.UtcNow
             };
 
-            _context.EventSchedules.Add(schedule);
+            _context.Schedules.Add(schedule);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetScheduleById), new { id = schedule.Id }, schedule);
         }
 
-        [HttpPut("UpdateSchedule/{id}")]
+        [HttpPut("UpdateSchedule")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> UpdateSchedule(int id, UpdateScheduleDTO dto)
         {
@@ -83,7 +83,6 @@ namespace Eventify.Controllers
             schedule.Description = dto.Description;
             schedule.StartTime = dto.StartTime;
             schedule.EndTime = dto.EndTime;
-            schedule.Speaker = dto.Speaker;
             schedule.UpdatedAt = DateTime.UtcNow;
 
             _context.Entry(schedule).State = EntityState.Modified;
@@ -92,7 +91,7 @@ namespace Eventify.Controllers
             return Ok("Schedule updated successfully.");
         }
 
-        [HttpDelete("DeleteSchedule/{id}")]
+        [HttpDelete("DeleteSchedule")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteSchedule(int id)
         {

@@ -24,7 +24,7 @@ namespace Eventify.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetAllFeedbacks()
         {
-            var feedbacks = await _context.Feedbacks.ToListAsync();
+            var feedbacks = await _context.FeedBacks.ToListAsync();
             return Ok(feedbacks);
         }
 
@@ -33,7 +33,7 @@ namespace Eventify.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> GetFeedbackById(int id)
         {
-            var feedbackItem = await _context.Feedbacks.FindAsync(id);
+            var feedbackItem = await _context.FeedBacks.FindAsync(id);
 
             if (feedbackItem == null)
             {
@@ -53,7 +53,7 @@ namespace Eventify.Controllers
                 return BadRequest(ModelState);
             }
 
-            var feedbackItem = new Feedback
+            var feedbackItem = new FeedBack
             {
                 UserId = feedbackDto.UserId,
                 EventId = feedbackDto.EventId,
@@ -62,64 +62,64 @@ namespace Eventify.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
-            _context.Feedbacks.Add(feedbackItem);
+            _context.FeedBacks.Add(feedbackItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetFeedbackById), new { id = feedbackItem.FeedbackId }, feedbackItem);
+            return CreatedAtAction(nameof(GetFeedbackById), new { id = feedbackItem.FeedBackId }, feedbackItem);
         }
-// PUT: api/UpdateFeedbackById?id=1
-[HttpPut("UpdateFeedbackById")]
-[Authorize(AuthenticationSchemes = "Bearer")]
-public async Task<IActionResult> UpdateFeedbackById(int id, UpdateFeedBackDTO feedbackDto)
-{
-    if (id != feedbackDto.FeedbackId)
-    {
-        return BadRequest("Feedback ID mismatch.");
-    }
 
-    var existingFeedback = await _context.Feedbacks.FindAsync(id);
-    if (existingFeedback == null)
-    {
-        return NotFound("Feedback not found.");
-    }
-
-    existingFeedback.Rating = feedbackDto.Rating;
-    existingFeedback.Comments = feedbackDto.Comments;
-    existingFeedback.UpdatedAt = DateTime.UtcNow;  
-
-    _context.Entry(existingFeedback).State = EntityState.Modified;
-
-    try
-    {
-        await _context.SaveChangesAsync();
-    }
-    catch (DbUpdateConcurrencyException)
-    {
-        if (!FeedbackExists(id))
+        [HttpPut("UpdateFeedbackById")]
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        public async Task<IActionResult> UpdateFeedbackById(int id, UpdateFeedBackDTO feedbackDto)
         {
-            return NotFound("Feedback not found.");
-        }
-        else
-        {
-            throw;
-        }
-    }
+            if (id != feedbackDto.FeedbackId)
+            {
+                return BadRequest("Feedback ID mismatch.");
+            }
 
-    return Ok("Feedback updated successfully.");
-}
+            var existingFeedback = await _context.FeedBacks.FindAsync(id);
+            if (existingFeedback == null)
+            {
+                return NotFound("Feedback not found.");
+            }
 
-        // DELETE: api/DeleteFeedbackById?id=1
+            existingFeedback.Rating = feedbackDto.Rating;
+            existingFeedback.Comments = feedbackDto.Comments;
+            existingFeedback.UpdatedAt = DateTime.UtcNow;  
+
+            _context.Entry(existingFeedback).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!FeedbackExists(id))
+                {
+                    return NotFound("Feedback not found.");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Ok("Feedback updated successfully.");
+        }
+
+
         [HttpDelete("DeleteFeedBackById")]
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<IActionResult> DeleteFeedbackById(int id)
         {
-            var feedbackItem = await _context.Feedbacks.FindAsync(id);
+            var feedbackItem = await _context.FeedBacks.FindAsync(id);
             if (feedbackItem == null)
             {
                 return NotFound("Feedback not found.");
             }
 
-            _context.Feedbacks.Remove(feedbackItem);
+            _context.FeedBacks.Remove(feedbackItem);
             await _context.SaveChangesAsync();
 
             return Ok("Feedback deleted successfully.");
@@ -127,7 +127,10 @@ public async Task<IActionResult> UpdateFeedbackById(int id, UpdateFeedBackDTO fe
 
         private bool FeedbackExists(int id)
         {
-            return _context.Feedbacks.Any(f => f.FeedbackId == id);
+            return _context.FeedBacks.Any(f => f.FeedBackId == id);
         }
+
+
+
     }
 }
