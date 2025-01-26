@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eventify.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250126041401_UpdateRegistrationUserId")]
+    partial class UpdateRegistrationUserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,13 +229,13 @@ namespace Eventify.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "91e2e169-5373-43c0-9662-bc6d36b7e97d",
+                            Id = "fe7f740b-3912-4991-a262-8345188d51ec",
                             Name = "USER",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "5f3a6f15-892a-4dfe-ae6d-45c5a7f94249",
+                            Id = "3fea3dfd-7b52-4a3f-9d48-3622da71aff7",
                             Name = "ADMIN",
                             NormalizedName = "USER"
                         });

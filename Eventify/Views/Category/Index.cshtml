@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Categories";
+}
+
+<h1>All Categories</h1>
+
+<table class="table table-striped" id="categoryTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="categoryBody">
+        <!-- Categories will be populated here by JavaScript -->
+    </tbody>
+</table>
+
+<a href="@Url.Action("Create", "Category")" class="btn btn-primary">Create New Category</a>
+
+@section Scripts {
+    <script>
+        // Fetch categories when the page loads
+        async function loadCategories() {
+            const response = await fetch('/Category/GetAllCategories', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + 'YOUR_BEARER_TOKEN_HERE' // Replace with actual token
+                }
+            });
+
+            if (response.ok) {
+                const categories = await response.json();
+                const categoryBody = document.getElementById('categoryBody');
+                categoryBody.innerHTML = ''; // Clear the table before adding new data
+                categories.forEach(category => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${category.name}</td>
+                        <td>${category.description}</td>
+                        <td>
+                            <a href="/Category/Details/${category.id}" class="btn btn-info">View</a>
+                            <a href="/Category/Edit/${category.id}" class="btn btn-warning">Edit</a>
+                            <a href="/Category/Delete/${category.id}" class="btn btn-danger">Delete</a>
+                        </td>
+                    `;
+                    categoryBody.appendChild(row);
+                });
+            } else {
+                alert('Failed to load categories');
+            }
+        }
+
+        // Call the function to load categories when the page is ready
+        document.addEventListener('DOMContentLoaded', loadCategories);
+    </script>
+}

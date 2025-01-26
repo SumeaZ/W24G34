@@ -1,6 +1,6 @@
 ﻿using Eventify.Data;
 using Eventify.Models;
-    using Eventify.DTOs.Categories.Input;
+using Eventify.DTOs.Categories.Input;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Eventify.Controllers
 {
     [ApiController]
-    [Route("api/")]
+    [Route("Category")]
     public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -99,9 +99,10 @@ namespace Eventify.Controllers
             return NoContent();
         }
 
-        //private bool CategoryExists(int id)
-        //{
-        //    return _context.Categories.Any(c => c.Id == id);
-        //}
+        
+
+
+
+
     }
 }

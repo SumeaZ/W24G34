@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Eventify.DTOs.Registrations;
 
 namespace Eventify.Models
@@ -9,7 +10,10 @@ namespace Eventify.Models
         public int Id { get; set; }
 
         [Required]
-        public string UserId { get; set; }
+        //[ForeignKey]
+        public string? UserId { get; set; }
+
+
 
         [Required]
         public int EventId { get; set; }

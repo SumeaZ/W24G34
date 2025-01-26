@@ -33,13 +33,13 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string>
             NormalizedName = "USER"
             
         },
- new Role
- {
-     Id = Guid.NewGuid().ToString(),
-     Name = "ADMIN",
-     NormalizedName = "USER"
+        new Role
+         {
+             Id = Guid.NewGuid().ToString(),
+             Name = "ADMIN",
+             NormalizedName = "USER"
      
- });
+         });
 
 
 
@@ -50,9 +50,17 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string>
        .WithMany(e => e.FeedBacks)
        .HasForeignKey(fb => fb.EventId)
        .OnDelete(DeleteBehavior.Cascade);
-        
-      
-           
+
+
+        builder.Entity<Registration>()
+        .HasOne<User>() 
+        .WithMany() 
+        .HasForeignKey(r => r.UserId)
+        .HasPrincipalKey(u => u.Id);
+
+
+
+
 
     }
 

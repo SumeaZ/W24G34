@@ -23,19 +23,33 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 //    .AddDefaultTokenProviders();
 
 
-builder.Services.AddIdentity<User, IdentityRole>(options =>
-{
-    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-})
-.AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders();
+//builder.Services.AddIdentity<User, IdentityRole>(options =>
+//{
+//    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+//})
+//.AddEntityFrameworkStores<ApplicationDbContext>()
+//.AddDefaultTokenProviders();
 
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllersWithViews();
 //builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    // Optional: You can configure Identity options here (password policies, etc.)
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>() // Ensure you're using your DbContext
+.AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -123,7 +137,7 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-//app.UseStaticFiles();
+app.UseStaticFiles();
 
 
 app.UseRouting();
@@ -136,6 +150,12 @@ app.MapControllers();
 app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Privacy}/{id?}");
+app.MapControllerRoute(
+        name: "category",
+        pattern: "{controller=Category}/{action=GetAllCategories}/{id?}");
 app.MapRazorPages();
 
 

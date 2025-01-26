@@ -2,7 +2,54 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container text-center py-5">
+    <h1 class="display-3 text-primary">Welcome to Eventify</h1>
+    <p class="lead mt-3">Your one-stop platform to create, manage, and attend events effortlessly.</p>
+
+    <div class="mt-4">
+        @* <a href="@Url.Action("Index", "Event")" class="btn btn-primary btn-lg mx-2">Browse Events</a> *@
+        <a href="@Url.Action("Create", "Event")" class="btn btn-outline-secondary btn-lg mx-2">Create an Event</a>
+    </div>
 </div>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Why Choose Eventify?</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title text-primary">Plan Your Events</h4>
+                    <p class="card-text">Easily create and manage events, from small gatherings to large-scale festivals.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title text-primary">Seamless Registration</h4>
+                    <p class="card-text">Allow users to register for events with a user-friendly and intuitive interface.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body text-center">
+                    <h4 class="card-title text-primary">Stay Updated</h4>
+                    <p class="card-text">Receive notifications and feedback to keep your audience engaged and informed.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Upcoming Features</h2>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">Integration with social media for easier sharing</li>
+        <li class="list-group-item">Advanced analytics for event performance tracking</li>
+        <li class="list-group-item">Custom themes and branding for event organizers</li>
+    </ul>
+</div>
+
+
+

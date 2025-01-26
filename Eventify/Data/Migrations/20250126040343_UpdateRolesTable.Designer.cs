@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eventify.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250126040343_UpdateRolesTable")]
+    partial class UpdateRolesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,12 +187,9 @@ namespace Eventify.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Registrations");
                 });
@@ -226,13 +226,13 @@ namespace Eventify.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "91e2e169-5373-43c0-9662-bc6d36b7e97d",
+                            Id = "85aad905-b133-4aef-8d15-0fa9c129cbcd",
                             Name = "USER",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "5f3a6f15-892a-4dfe-ae6d-45c5a7f94249",
+                            Id = "ee0dbe6c-8051-4b35-af33-d76a9530d48d",
                             Name = "ADMIN",
                             NormalizedName = "USER"
                         });
@@ -511,15 +511,6 @@ namespace Eventify.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Eventify.Models.Registration", b =>
-                {
-                    b.HasOne("Eventify.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
