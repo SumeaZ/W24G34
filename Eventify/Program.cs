@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
@@ -23,40 +23,24 @@ builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 //    .AddDefaultTokenProviders();
 
 
-//builder.Services.AddIdentity<User, IdentityRole>(options =>
-//{
-//    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-//})
-//.AddEntityFrameworkStores<ApplicationDbContext>()
-//.AddDefaultTokenProviders();
-
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddControllersWithViews();
 //builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
-{
-    // Optional: You can configure Identity options here (password policies, etc.)
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 6;
-    options.Password.RequiredUniqueChars = 1;
-})
-.AddEntityFrameworkStores<ApplicationDbContext>() // Ensure you're using your DbContext
-.AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
     options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
 });
-
 
 // Add Swagger with JWT
 builder.Services.AddSwaggerGen(option =>
@@ -89,12 +73,10 @@ builder.Services.AddSwaggerGen(option =>
 
 builder.Services.AddRazorPages();
 
-//Adding authentication to the application using .AddAuthentication, and specifying the authentication as JWTBearer
+// Add authentication and JWT configuration
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    //Adding the JwtBearer authentication to the authentication services
     .AddJwtBearer(options =>
     {
-        //Configuring how the token should be validated
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -116,20 +98,19 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy => policy.RequireClaim("Role", "Admin"));
-    //[Authorize(Policy = "AdminOnly")]
 });
-
-
 
 var app = builder.Build();
 
+// Enable Swagger in development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Demo API v1");
-        c.RoutePrefix = string.Empty; // Access Swagger at root
+        // Swagger will be accessible at /swagger now
+        c.RoutePrefix = "swagger"; // Ensures Swagger UI is at /swagger instead of the root URL
     });
 }
 
@@ -137,28 +118,24 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+//app.UseStaticFiles();
 
 
-app.UseRouting();
+    app.UseRouting();
 
-app.UseAuthentication();
-app.UseAuthorization();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-app.MapControllers();
+    app.MapControllers();
+    app.MapRazorPages();
 
-app.MapControllerRoute(
+    // default route for index.cshtml
+    app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Privacy}/{id?}");
-app.MapControllerRoute(
-        name: "category",
-        pattern: "{controller=Category}/{action=GetAllCategories}/{id?}");
 app.MapRazorPages();
 
 
 
 
-app.Run();
+    app.Run();
