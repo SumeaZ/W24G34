@@ -15,7 +15,9 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string>
         public DbSet<Category> Categories { get; set; }
         public DbSet<FeedBack> FeedBacks { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-
+        public DbSet<Registration> Registrations { get; set; }
+        public DbSet<Venue> Venues { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
