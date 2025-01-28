@@ -34,7 +34,7 @@ namespace Eventify.Controllers
             {
                 return NotFound();
             }
-            return Ok(registration); 
+            return Ok(registration);
         }
 
         // POST: api/Registration
@@ -78,7 +78,7 @@ namespace Eventify.Controllers
             var registration = await _context.Registrations.FindAsync(id);
             if (registration == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
             // Update registration fields with DTO data
@@ -88,7 +88,7 @@ namespace Eventify.Controllers
             _context.Entry(registration).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return NoContent(); 
+            return NoContent();
         }
 
         // DELETE: api/Registration/5
@@ -98,13 +98,13 @@ namespace Eventify.Controllers
             var registration = await _context.Registrations.FindAsync(id);
             if (registration == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
             _context.Registrations.Remove(registration);
             await _context.SaveChangesAsync();
 
-            return NoContent(); 
+            return NoContent();
         }
     }
 }

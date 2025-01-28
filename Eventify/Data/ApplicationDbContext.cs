@@ -16,7 +16,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string>
         public DbSet<FeedBack> FeedBacks { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Registration> Registrations { get; set; }
-        public DbSet<Venue> Venues { get; set; }
+    public DbSet<Venue> Venues { get; set; }
         public DbSet<Notification> Notifications { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -42,7 +42,7 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string>
          });
 
 
-
+        builder.Entity<Events>().Property(e => e.EventName).IsRequired();
 
 
         builder.Entity<FeedBack>()
@@ -57,6 +57,9 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, string>
         .WithMany() 
         .HasForeignKey(r => r.UserId)
         .HasPrincipalKey(u => u.Id);
+
+        
+
 
 
 

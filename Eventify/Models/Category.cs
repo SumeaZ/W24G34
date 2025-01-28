@@ -14,7 +14,7 @@ namespace Eventify.Models
 
         [Required]
         [MinLength(2, ErrorMessage = "Description should be at least 2 characters")]
-        [MaxLength(20, ErrorMessage = "Description cannot be over 20 characters")]
+        [MaxLength(200, ErrorMessage = "Description cannot be over 20 characters")]
         public string Description { get; set; }
     }
 }

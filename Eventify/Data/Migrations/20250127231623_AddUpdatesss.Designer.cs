@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Eventify.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250126043214_UpdateRegistrationUseridtest")]
-    partial class UpdateRegistrationUseridtest
+    [Migration("20250127231623_AddUpdatesss")]
+    partial class AddUpdatesss
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,8 +34,8 @@ namespace Eventify.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -167,36 +167,6 @@ namespace Eventify.Data.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("Eventify.Models.Registration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("RegistrationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasMaxLength(20)
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Registrations");
-                });
-
             modelBuilder.Entity("Eventify.Models.Role", b =>
                 {
                     b.Property<string>("Id")
@@ -229,13 +199,13 @@ namespace Eventify.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1b5622b0-449b-4996-863f-430bd1e5ef29",
+                            Id = "6c31c5cc-c0a4-49a3-958d-5af5bae6f849",
                             Name = "USER",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "49fcf651-43f5-4fe8-907d-31a47a0aedbd",
+                            Id = "7300e5f8-6bb3-49c3-ae1d-91565f476551",
                             Name = "ADMIN",
                             NormalizedName = "USER"
                         });
@@ -323,6 +293,10 @@ namespace Eventify.Data.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -514,15 +488,6 @@ namespace Eventify.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Eventify.Models.Registration", b =>
-                {
-                    b.HasOne("Eventify.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

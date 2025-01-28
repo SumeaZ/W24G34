@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Eventify.Models.Events>
+
+    @{
+        ViewData["Title"] = "Events";
+        int currentPage = (int)ViewData["CurrentPage"];
+        int totalPages = (int)ViewData["TotalPages"];
+        string searchString = ViewData["SearchString"]?.ToString() ?? "";
+    }
+
+    <h1>Events</h1>
+
+    <!-- Search form -->
+    <form method="get" asp-action="Index">
+        <div class="form-group">
+            <label for="searchString">Search by Name:</label>
+            <input type="text" id="searchString" name="searchString" class="form-control" value="@searchString" />
+            <button type="submit" class="btn btn-danger mt-2">Search</button>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().EventName)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().StartDate)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().EndDate)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Location)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.EventName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.StartDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.EndDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Location)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EventsId" class="btn btn-primary btn-sm">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.EventsId" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.EventsId" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+<p>
+    <a asp-action="Create" class="btn btn-success align-text-bottom m-lg-auto">Create New</a>
+</p>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <ul class="pagination">
+            @if (currentPage > 1)
+            {
+                <li>
+                    <a asp-action="Index" asp-route-searchString="@searchString" asp-route-page="@(currentPage - 1)" class="btn btn-light">Previous</a>
+                </li>
+            }
+
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                if (i == currentPage)
+                {
+                    <li class="active">
+                        <span class="btn btn-primary">@i</span>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a asp-action="Index" asp-route-searchString="@searchString" asp-route-page="@i" class="btn btn-light">@i</a>
+                    </li>
+                }
+            }
+
+            @if (currentPage < totalPages)
+            {
+                <li>
+                    <a asp-action="Index" asp-route-searchString="@searchString" asp-route-page="@(currentPage + 1)" class="btn btn-light">Next</a>
+                </li>
+            }
+        </ul>
+
+   
+    </div>
+

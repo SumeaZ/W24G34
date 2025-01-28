@@ -7,7 +7,7 @@
 namespace Eventify.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Initt : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,20 +15,20 @@ namespace Eventify.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "1b5622b0-449b-4996-863f-430bd1e5ef29");
+                keyValue: "6af7161e-3c1a-48fd-a4e9-29fe50900fcf");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "49fcf651-43f5-4fe8-907d-31a47a0aedbd");
+                keyValue: "ca30e50a-ad61-4f86-97d0-8a6f3ea97c11");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "5f3a6f15-892a-4dfe-ae6d-45c5a7f94249", null, null, "ADMIN", "USER" },
-                    { "91e2e169-5373-43c0-9662-bc6d36b7e97d", null, null, "USER", "USER" }
+                    { "29792465-0b18-453e-9318-0c9849145bb5", null, null, "USER", "USER" },
+                    { "34919457-a46c-4b2f-b233-4874eb8dd1dd", null, null, "ADMIN", "USER" }
                 });
         }
 
@@ -38,20 +38,20 @@ namespace Eventify.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "5f3a6f15-892a-4dfe-ae6d-45c5a7f94249");
+                keyValue: "29792465-0b18-453e-9318-0c9849145bb5");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "91e2e169-5373-43c0-9662-bc6d36b7e97d");
+                keyValue: "34919457-a46c-4b2f-b233-4874eb8dd1dd");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1b5622b0-449b-4996-863f-430bd1e5ef29", null, null, "USER", "USER" },
-                    { "49fcf651-43f5-4fe8-907d-31a47a0aedbd", null, null, "ADMIN", "USER" }
+                    { "6af7161e-3c1a-48fd-a4e9-29fe50900fcf", null, null, "ADMIN", "USER" },
+                    { "ca30e50a-ad61-4f86-97d0-8a6f3ea97c11", null, null, "USER", "USER" }
                 });
         }
     }

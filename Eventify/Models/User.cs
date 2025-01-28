@@ -17,7 +17,6 @@ namespace Eventify.Models
         [MinLength(2, ErrorMessage = "Last name should be at least 2 characters")]
         [MaxLength(20, ErrorMessage = "Last name cannot be over 20 characters")]
         public string? LastName { get; set; }
-        
-
+        public string Password { get; internal set; }
     }
 }

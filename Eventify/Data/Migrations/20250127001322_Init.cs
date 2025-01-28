@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Eventify.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateRolesTable : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,12 +16,12 @@ namespace Eventify.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "475610c0-f65c-41fa-87b3-feb33ac96ff1");
+                keyValue: "cc89ea3a-38d3-4fa8-9e98-62675a2b68db");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "7b71a279-7390-45aa-a838-8d889d9e7cde");
+                keyValue: "df7d63a6-3047-4f7f-8c03-1f61fafb6239");
 
             migrationBuilder.CreateTable(
                 name: "Notifications",
@@ -46,14 +46,34 @@ namespace Eventify.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     EventId = table.Column<int>(type: "int", nullable: false),
+                    EventsId = table.Column<int>(type: "int", nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Registrations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Registrations_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Registrations_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Registrations_Events_EventsId",
+                        column: x => x.EventsId,
+                        principalTable: "Events",
+                        principalColumn: "EventsId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -78,9 +98,24 @@ namespace Eventify.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "85aad905-b133-4aef-8d15-0fa9c129cbcd", null, null, "USER", "USER" },
-                    { "ee0dbe6c-8051-4b35-af33-d76a9530d48d", null, null, "ADMIN", "USER" }
+                    { "6af7161e-3c1a-48fd-a4e9-29fe50900fcf", null, null, "ADMIN", "USER" },
+                    { "ca30e50a-ad61-4f86-97d0-8a6f3ea97c11", null, null, "USER", "USER" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Registrations_EventsId",
+                table: "Registrations",
+                column: "EventsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Registrations_UserId",
+                table: "Registrations",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Registrations_UserId1",
+                table: "Registrations",
+                column: "UserId1");
         }
 
         /// <inheritdoc />
@@ -98,20 +133,20 @@ namespace Eventify.Data.Migrations
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "85aad905-b133-4aef-8d15-0fa9c129cbcd");
+                keyValue: "6af7161e-3c1a-48fd-a4e9-29fe50900fcf");
 
             migrationBuilder.DeleteData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
-                keyValue: "ee0dbe6c-8051-4b35-af33-d76a9530d48d");
+                keyValue: "ca30e50a-ad61-4f86-97d0-8a6f3ea97c11");
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "475610c0-f65c-41fa-87b3-feb33ac96ff1", null, null, "ADMIN", "USER" },
-                    { "7b71a279-7390-45aa-a838-8d889d9e7cde", null, null, "USER", "USER" }
+                    { "cc89ea3a-38d3-4fa8-9e98-62675a2b68db", null, "This is the default user role", "USER", "USER" },
+                    { "df7d63a6-3047-4f7f-8c03-1f61fafb6239", null, "This is the administrator role", "ADMIN", "ADMIN" }
                 });
         }
     }

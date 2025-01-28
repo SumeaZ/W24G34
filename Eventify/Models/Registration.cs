@@ -12,11 +12,11 @@ namespace Eventify.Models
         [Required]
         //[ForeignKey]
         public string? UserId { get; set; }
-
-
+        //public User User { get; set; }
 
         [Required]
         public int EventId { get; set; }
+        //public Events Events { get; set; }
 
         [Required]
         public DateTime RegistrationDate { get; set; }
